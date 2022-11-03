@@ -32,4 +32,4 @@ jobs:
           SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
           SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
       - name: Pull Repo
-        run: ssh -tt develop
+        run: ssh -tt develop 'cd /home/reza/deploy-golang-app && git  pull'
