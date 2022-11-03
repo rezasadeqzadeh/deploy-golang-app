@@ -27,3 +27,7 @@ jobs:
             IdentityFile ~/.ssh/develop.key
             StrictHostKeyChecking no
           END
+        env:
+          SSH_USER: ${{ secrets.DEVELOP_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
