@@ -15,17 +15,17 @@ jobs:
 
     - name: Setup ssh
       run: |
-            mkdir -p ~/.ssh/
-            echo "$SSH_KEY" > ~/.ssh/develop.key
-            chmod 600 ~/.ssh/develop.key
-            cat >>~/.ssh/config <<END
-            Host develop
-              HostName $SSH_HOST
-              User $SSH_USER
-              IdentityFile ~/.ssh/develop.key
-              StrictHostKeyChecking no
-            END
-          env:
-            SSH_USER: ${{ secrets.DEVELOP_SSH_USER }}
-            SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
-            SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}                        
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/develop.key
+          chmod 600 ~/.ssh/develop.key
+          cat >>~/.ssh/config <<END
+          Host develop
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/develop.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEVELOP_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
