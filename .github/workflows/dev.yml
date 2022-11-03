@@ -24,8 +24,8 @@ jobs:
           SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
           SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
       - name: Pull github
-        run: ssh staging 'cd /home/reza/deploy-go-app/ && git pull'
+        run: ssh develop 'cd /home/reza/deploy-go-app/ && git pull'
       - name: Build
-        run: ssh staging 'cd /home/reza/deploy-go-app/ && go tidy && go vendor && go build'
+        run: ssh develop 'cd /home/reza/deploy-go-app/ && go tidy && go vendor && go build'
       - name: Run
-        run: ssh staging '/home/reza/nft-offchain/deploy-go-app/main&'
+        run: ssh develop '/home/reza/nft-offchain/deploy-go-app/main&'
