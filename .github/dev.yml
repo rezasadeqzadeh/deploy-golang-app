@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+env:
+
+jobs:
+  deploy:
+    runs-on: main
+    name: deploy
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/develop.key
+          chmod 600 ~/.ssh/develop.key
+          cat >>~/.ssh/config <<END
+          Host develop
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/develop.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEVELOP_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
+      - name: Pull github
+        run: ssh staging 'cd /home/reza/deploy-go-app/ && git pull'
+      - name: Build
+        run: ssh staging 'cd /home/reza/deploy-go-app/ && go tidy && go vendor && go build'
+      - name: Run
+        run: ssh staging '/home/reza/nft-offchain/deploy-go-app/main&'
