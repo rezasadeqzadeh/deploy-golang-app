@@ -33,5 +33,7 @@ jobs:
           SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
       - name: Pull Repo
         run: ssh -tt develop 'cd /home/reza/deploy-golang-app && git  pull'
+      - name: Build App
         run: ssh -tt develop 'cd /home/reza/deploy-golang-app && go mod tidy && go mod vendor && go build'
+      - name: Run App
         run: ssh -tt develop 'cd /home/reza/deploy-golang-app && killall -9 main && ./main &'
