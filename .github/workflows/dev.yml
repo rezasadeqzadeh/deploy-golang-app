@@ -15,25 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/develop.key
-          chmod 600 ~/.ssh/develop.key
-          cat >>~/.ssh/config <<END
-          Host develop
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/develop.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{ secrets.DEVELOP_SSH_USER }}
-          SSH_KEY: ${{ secrets.DEVELOP_SSH_KEY }}
-          SSH_HOST: ${{ secrets.DEVELOP_SSH_HOST }}
-      - name: Pull Repo
-        run: ssh -tt develop 'cd /home/reza/deploy-golang-app && git  pull'
-      - name: Build App
-        run: ssh -tt develop 'cd /home/reza/deploy-golang-app && go mod tidy && go mod vendor && go build'
-      - name: Run App
-        run: ssh -tt develop 'cd /home/reza/deploy-golang-app && killall -9 main && ./main &'
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEVELOP_SSH_HOST }}
+          username: ${{ secrets.DEVELOP_SSH_USER }}
+          key: ${{ secrets.DEVELOP_SSH_KEY }}
+          port: 22
+          script: whoami
