@@ -22,4 +22,10 @@ jobs:
           username: ${{ secrets.DEVELOP_SSH_USER }}
           key: ${{ secrets.DEVELOP_SSH_KEY }}
           port: 22
-          script: whoami
+          script: |
+            cd /home/reza/deploy-golang-app 
+            git  pull
+            go mod tidy
+            go build
+            killall  -9  main
+            ./main&
