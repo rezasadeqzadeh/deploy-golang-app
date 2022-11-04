@@ -27,5 +27,5 @@ jobs:
             git  pull
             go mod tidy
             go build
-            killall  -9  main
-            ./main&
+            killall  -9  deploy-golang-app
+            ./deploy-golang-app&
